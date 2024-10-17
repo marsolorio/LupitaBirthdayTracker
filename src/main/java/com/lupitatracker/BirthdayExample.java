@@ -7,13 +7,12 @@ import org.json.simple.parser.*;
 
 public class BirthdayExample {
 
-  // this is a private and static hashmap to store the birthdays
+  // This is a private and static hashmap to store the birthdays
   private static HashMap<String, String> birthdayMap = new HashMap<String, String>();
 
-  // this code reads a the json file
-  // students do not have to change this function
+  // This code reads the JSON file
   public static JSONArray readJSONArrayFile(String fileName) {
-    // JSON parser object to parse read file
+    // JSON parser object to parse the read file
     JSONParser jsonParser = new JSONParser();
 
     JSONArray birthdayArr = null;
@@ -34,47 +33,51 @@ public class BirthdayExample {
     return birthdayArr;
   }
 
-  // students do not have to change this function
+  // Initialize the HashMap by reading the data from the JSON file
   public static void initializeMap(final String pathToFile) {
     JSONArray jsonData = readJSONArrayFile(pathToFile);
 
-    // loop over list
+    // Loop over the list
     String birthday, name;
     JSONObject obj;
-    for (Integer i = 0; i < jsonData.size(); i++) {
-      // parse the object and pull out the name and birthday
+    for (int i = 0; i < jsonData.size(); i++) {
+      // Parse the object and pull out the name and birthday
       obj = (JSONObject) jsonData.get(i);
       birthday = (String) obj.get("birthday");
       name = (String) obj.get("name");
 
-      // add the name and birthday in to a hashmap
+      // Add the name and birthday to the hashmap
       birthdayMap.put(name, birthday);
-
-      // print the names and birthdays
-      System.out.println("name = " + name);
-      System.out.println("birthday = " + birthday);
     }
   }
 
   public static void main(final String[] args) {
-    // Update the path to your birthday.json file
+    // Path to the JSON file
     String pathToFile = "/Users/martinsolorio/Desktop/LupitaBirthdayTracker/birthday.json";
 
-    // initialize the hash map
+    // Initialize the hash map with data from the JSON file
     initializeMap(pathToFile);
 
-    // read user input from keyboard
-    System.out.println("Reading user input into a string");
-
-    // get user input
+    // Get user input from the keyboard
     Scanner input = new Scanner(System.in);
-    System.out.print("Enter a name:");
+    System.out.print("Enter a name or part of a name: ");
     String name = input.nextLine();
 
-    // print user input
-    System.out.println("name = " + name);
+    // Search for full or partial name matches
+    boolean found = false;
+    for (Map.Entry<String, String> entry : birthdayMap.entrySet()) {
+      if (entry.getKey().toLowerCase().contains(name.toLowerCase())) {
+        System.out.println("Birthday of " + entry.getKey() + ": " + entry.getValue());
+        found = true;
+      }
+    }
 
-    // close the scanner
+    // If no match is found, print a message
+    if (!found) {
+      System.out.println("No matches found for " + name);
+    }
+
+    // Close the scanner
     input.close();
   }
 }
