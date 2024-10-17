@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class App {
@@ -19,15 +20,11 @@ public class App {
 
         // Simple user input to look up birthdays
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter a name to find their birthday: ");
+        System.out.print("Enter a name or partial name to find their birthday(s): ");
         String name = scanner.nextLine();
 
-        // Check if the name is in the HashMap
-        if (birthdayMap.containsKey(name)) {
-            System.out.println(name + "'s birthday is: " + birthdayMap.get(name));
-        } else {
-            System.out.println("Birthday for " + name + " is unknown.");
-        }
+        // Perform partial name matching
+        searchBirthday(name);
     }
 
     // Method to load birthdays from a JSON file
@@ -40,6 +37,20 @@ public class App {
             System.out.println("Birthdays loaded successfully.");
         } catch (IOException e) {
             System.out.println("Error loading birthday data: " + e.getMessage());
+        }
+    }
+
+    // Method to search for birthdays using partial name matching
+    private static void searchBirthday(String name) {
+        boolean found = false;
+        for (Map.Entry<String, String> entry : birthdayMap.entrySet()) {
+            if (entry.getKey().toLowerCase().contains(name.toLowerCase())) {
+                System.out.println(entry.getKey() + "'s birthday is: " + entry.getValue());
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No birthdays found for the name: " + name);
         }
     }
 }
