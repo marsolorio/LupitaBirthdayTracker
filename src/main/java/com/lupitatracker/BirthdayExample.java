@@ -1,4 +1,4 @@
-package com.example;
+package com.lupitatracker;
 
 import java.io.*;
 import java.util.*;
@@ -57,15 +57,8 @@ public class BirthdayExample {
   }
 
   public static void main(final String[] args) {
-    /*
-     * students will need to change the path below to work on THEIR laptop. this is currently the path for my laptop.
-     * if students do not know or understand what a "path" is, students should first complete the
-     * extra credit module on Files, Directories, and Folders in Canvas.
-     */
-    String pathToFile =
-      "C:/Users/jerom/Documents/GitHub/class-java/birthday-lupita-lookup-app/lupita/src/main/java/com/example/birthdayOnlyForTesting.json";
-
-    // students should change the code below in order to implment their own solution
+    // Update the path to your birthday.json file
+    String pathToFile = "/Users/martinsolorio/Desktop/LupitaBirthdayTracker/birthday.json";
 
     // initialize the hash map
     initializeMap(pathToFile);
